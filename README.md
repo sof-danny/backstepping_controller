@@ -2,6 +2,20 @@
 
 A Python package for simulating control systems using backstepping control laws. This package provides a flexible and easy-to-use interface for designing, simulating, and analyzing control systems with options for trajectory tracking, plotting, and saving results.
 
+
+## Introduction to Backstepping Control
+
+Backstepping is a systematic and recursive control design technique primarily used for stabilizing nonlinear systems. Unlike traditional control methods that might struggle with complex nonlinearities, backstepping breaks down the control problem into smaller, more manageable sub-problems. These sub-problems are then solved sequentially, "stepping back" from the output to the input, hence the name "backstepping."
+
+Key Concepts:
+Virtual Control: Intermediate control laws are designed for each state, leading to the final control input.
+Lyapunov Function: A mathematical function that helps ensure system stability. Backstepping uses this function to guide the control design process.
+Recursive Design: The control input is designed by recursively stabilizing each state in the system.
+
+Worked examples can be found in [this paper]( https://doi.org/10.1016/B978-0-12-817582-8.00008-8).
+ 
+
+
 ## Installation
 
 To install the package, simply run:
@@ -16,15 +30,17 @@ pip install backstepping_controller
 To use the package, import the necessary functions:
 
 ```bash
+import sympy as sp
+import numpy as np
+```
+
+```bash
 from backstepping_controller import generic_backstepping_controller, simulate_system, plot_responses, save_responses
 ```
 
 2. Defining the System
 First, you need to define your system's state equations and parameters. For example, if you have a 3D system:
 
-```bash
-import sympy as sp
-```
 
 # Define system parameters
 ```bash
@@ -42,7 +58,7 @@ state_equations = [
 ]
 
 # Define the gains
-gains_vals = [1.0, 2.0, 3.0]
+gains_vals = [10.0, 10.0, 15.0]
 ```
 
 3. Creating the Control Law
@@ -70,7 +86,7 @@ params_subs = {a: 1.0, b: 0.5, c: 0.2, 'k1': gains_vals[0], 'k2': gains_vals[1],
 # Simulate the system
 state_values, control_inputs = simulate_system(
     final_control_law, states, gains_vals, initial_conditions, time, state_equations, params_subs, 
-    plot=True, save_path='results.json', print_law=True)
+    plot=True, save_path='results.json', print_law=True) #You can change plot to `False` if you dont want to see the plots yet
 ```
 
 5. Plotting the Results
@@ -116,7 +132,7 @@ state_equations = [
 ]
 
 # Define the gains
-gains_vals = [1.0, 2.0, 3.0]
+gains_vals = [10.0, 10.0, 15.0]
 
 # Create the control law
 final_control_law, states, gains = generic_backstepping_controller(num_states, state_equations, 'u', gains_vals, tracking=False)
