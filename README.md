@@ -27,7 +27,9 @@ import sympy as sp
 ```
 
 # Define system parameters
+```bash
 num_states = 3
+
 x1, x2, x3 = sp.symbols('x1 x2 x3')
 u = sp.Symbol('u')
 a, b, c = sp.symbols('a b c')
@@ -41,6 +43,7 @@ state_equations = [
 
 # Define the gains
 gains_vals = [1.0, 2.0, 3.0]
+```
 
 3. Creating the Control Law
 Use the `generic_backstepping_controller` function to create the control law for your system:
